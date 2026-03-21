@@ -3,17 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <title>Thank you</title>
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-MMX4RZ3M81');
+  </script>
 
   <style>
     /* Fix: Apply background color to html to prevent white 'rubber-banding' gaps */
     html {
-      background-color: black; 
+      background-color: black;
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden; /* Prevents accidental scrolling on a simple thank you page */
+      overflow: hidden; 
     }
 
     body {
@@ -24,20 +33,18 @@
       align-items: center;
       font-family: sans-serif;
 
-      /* Fix: Attachment fixed helps Safari maintain cover during UI shifts */
+      /* Background Fixes */
       background: url("background.gif") no-repeat center center;
       background-size: cover;
       background-attachment: fixed;
       background-color: black;
 
-      /* Use the Dynamic Viewport Height for mobile */
+      /* Viewport Height Fixes */
       min-height: 100dvh;
       width: 100%;
 
-      /* Safe area padding so content doesn't hit the notch */
+      /* Notch/Safe Area handling */
       padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-      
-      /* Essential: ensures padding doesn't push the height beyond 100dvh */
       box-sizing: border-box;
     }
 
@@ -49,7 +56,7 @@
       text-align: center;
       font-size: clamp(1.2rem, 6vw, 2rem);
       margin: 20px;
-      backdrop-filter: blur(5px); /* Adds a nice modern touch if the gif is busy */
+      backdrop-filter: blur(5px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       max-width: 80%;
     }
