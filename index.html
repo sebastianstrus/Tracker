@@ -4,50 +4,58 @@
   <meta charset="UTF-8">
   <title>Thank you</title>
 
-  <!-- Kluczowe dla iPhone -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
   <style>
-    html, body {
+    /* Fix: Apply background color to html to prevent white 'rubber-banding' gaps */
+    html {
+      background-color: black; 
       margin: 0;
       padding: 0;
       height: 100%;
-      background-color: black; /* fallback */
+      overflow: hidden; /* Prevents accidental scrolling on a simple thank you page */
     }
 
     body {
+      margin: 0;
+      padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: sans-serif;
 
-      /* Tło */
+      /* Fix: Attachment fixed helps Safari maintain cover during UI shifts */
       background: url("background.gif") no-repeat center center;
       background-size: cover;
+      background-attachment: fixed;
+      background-color: black;
 
-      /* 🔥 poprawki dla mobile */
-      min-height: 100vh;
-      min-height: 100svh;
+      /* Use the Dynamic Viewport Height for mobile */
       min-height: 100dvh;
+      width: 100%;
 
-      /* safe areas (iPhone notch itp.) */
-      padding-top: env(safe-area-inset-top);
-      padding-bottom: env(safe-area-inset-bottom);
-      padding-left: env(safe-area-inset-left);
-      padding-right: env(safe-area-inset-right);
+      /* Safe area padding so content doesn't hit the notch */
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      
+      /* Essential: ensures padding doesn't push the height beyond 100dvh */
+      box-sizing: border-box;
     }
 
     h1 {
       color: white;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 20px 30px;
-      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 25px 35px;
+      border-radius: 16px;
       text-align: center;
-      font-size: clamp(20px, 5vw, 32px);
+      font-size: clamp(1.2rem, 6vw, 2rem);
+      margin: 20px;
+      backdrop-filter: blur(5px); /* Adds a nice modern touch if the gif is busy */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      max-width: 80%;
     }
   </style>
 </head>
 <body>
-  <h1>Thank you. You can close the tab.</h1>
+  <h1>Thank you.<br>You can close the tab.</h1>
 </body>
 </html>
