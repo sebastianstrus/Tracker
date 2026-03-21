@@ -3,27 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <title>Thank you</title>
+
+  <!-- Kluczowe dla iPhone -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
   <style>
-    body {
+    html, body {
       margin: 0;
-      height: 100vh;
+      padding: 0;
+      height: 100%;
+      background-color: black; /* fallback */
+    }
+
+    body {
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: sans-serif;
 
       /* Tło */
-      background-image: url("images/background.gif");
-      background-size: cover;        /* dopasowanie do ekranu */
-      background-position: center;   /* wyśrodkowanie */
-      background-repeat: no-repeat;  /* brak powtarzania */
+      background: url("background.gif") no-repeat center center;
+      background-size: cover;
+
+      /* 🔥 poprawki dla mobile */
+      min-height: 100vh;
+      min-height: 100svh;
+      min-height: 100dvh;
+
+      /* safe areas (iPhone notch itp.) */
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
     }
 
     h1 {
       color: white;
-      background: rgba(0,0,0,0.5); /* lekka przyciemniona ramka dla czytelności */
-      padding: 20px;
-      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px 30px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: clamp(20px, 5vw, 32px);
     }
   </style>
 </head>
