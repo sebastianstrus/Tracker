@@ -2,15 +2,22 @@ const express = require("express");
 const fs = require("fs");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
+// CORS (MUSI być wcześniej)
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
 // funkcja do zapisu
 function saveLog(newLog) {
   let logs = [];
 
-  // jeśli plik istnieje → wczytaj
   if (fs.existsSync("logs.json")) {
     const data = fs.readFileSync("logs.json");
     logs = JSON.parse(data);
@@ -18,7 +25,6 @@ function saveLog(newLog) {
 
   logs.push(newLog);
 
-  // opcjonalny limit (np. 1000 logów)
   if (logs.length > 1000) {
     logs.shift();
   }
@@ -26,6 +32,7 @@ function saveLog(newLog) {
   fs.writeFileSync("logs.json", JSON.stringify(logs, null, 2));
 }
 
+// endpoint logowania
 app.post("/log", (req, res) => {
   const log = {
     time: new Date().toISOString(),
@@ -35,17 +42,20 @@ app.post("/log", (req, res) => {
   };
 
   saveLog(log);
-
   res.sendStatus(200);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+// dashboard
+app.get("/dashboard", (req, res) => {
+  res.send("test dashboard");
 });
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
+// opcjonalnie root
+app.get("/", (req, res) => {
+  res.send("Backend is running ✅");
+});
+
+// 🚀 NA SAMYM KOŃCU
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
