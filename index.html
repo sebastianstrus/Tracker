@@ -9,6 +9,11 @@
 
   gtag('config', 'G-1W9CKC5QE9');
 </script>
+<script>
+  fetch("http://localhost:3000/log", {
+    method: "POST",
+  });
+</script>
   <meta charset="UTF-8">
   <title>Thank you</title>
   
@@ -67,5 +72,9 @@
 </head>
 <body>
   <h1>Thank you.<br>You can close the tab.</h1>
+
+  <p style="position:fixed;bottom:10px;font-size:10px;color:white;opacity:0.7;">
+  This site collects technical data (e.g. IP address, browser info).
+</p>
 </body>
 </html>
