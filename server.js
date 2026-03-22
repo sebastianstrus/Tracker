@@ -45,9 +45,78 @@ app.post("/log", (req, res) => {
   res.sendStatus(200);
 });
 
-// dashboard
+app.get("/logs", (req, res) => {
+  if (!fs.existsSync("logs.json")) return res.json([]);
+  res.sendFile(__dirname + "/logs.json");
+});
+
 app.get("/dashboard", (req, res) => {
-  res.send("test dashboard");
+  res.send(`
+    <html>
+    <head>
+      <title>Dashboard</title>
+      <style>
+        body {
+          font-family: sans-serif;
+          background: #111;
+          color: #eee;
+          padding: 20px;
+        }
+        h1 {
+          margin-bottom: 20px;
+        }
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        th, td {
+          padding: 10px;
+          border-bottom: 1px solid #333;
+          font-size: 14px;
+        }
+        th {
+          text-align: left;
+          color: #aaa;
+        }
+        tr:hover {
+          background: #222;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>Logs Dashboard</h1>
+      <table id="table">
+        <tr>
+          <th>Time</th>
+          <th>IP</th>
+          <th>Language</th>
+          <th>Device</th>
+        </tr>
+      </table>
+
+      <script>
+        fetch('/logs')
+          .then(res => res.json())
+          .then(data => {
+            const table = document.getElementById('table');
+
+            data.reverse().forEach(log => {
+              const row = document.createElement('tr');
+
+              row.innerHTML = \`
+                <td>\${log.time}</td>
+                <td>\${log.ip}</td>
+                <td>\${log.language}</td>
+                <td>\${log.userAgent}</td>
+              \`;
+
+              table.appendChild(row);
+            });
+          });
+      </script>
+    </body>
+    </html>
+  `);
 });
 
 // opcjonalnie root
